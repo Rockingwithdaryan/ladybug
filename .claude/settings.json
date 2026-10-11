@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(MSYS_NO_PATHCONV=1 docker run --rm --network none -v \"C:/Users/darya/Downloads/non-bcit projects/Ladybug/LadyBug/runner:/src:ro\" ladybug-runner:latest bash -c 'cp -r /src /tmp/r && cd /tmp/r && python -m unittest test_regressions 2>&1 | tail -25; echo \"=== same test against the ORIGINAL server.py baked into the image ===\"; cd /app && cp /src/test_regressions.py /tmp/t.py && sed -i \"s/^import main$/import server as main/\" /tmp/t.py && cp /tmp/t.py ./tr_orig.py 2>/dev/null || \\(cd /tmp && cp -r /app /tmp/app && cp /tmp/t.py /tmp/app/tr_orig.py && cd /tmp/app && python -m unittest tr_orig 2>&1 | tail -6\\)')",
+      "Bash(MSYS_NO_PATHCONV=1 docker run --rm --network none -v \"C:/Users/darya/Downloads/non-bcit projects/Ladybug/LadyBug/runner:/src:ro\" ladybug-runner:latest bash -c 'cp -r /src /tmp/r && cd /tmp/r && python -m unittest -q test_regressions 2>&1 | tail -3')",
+      "PowerShell($conns = Get-NetTCPConnection -LocalPort 3100 -State Listen -ErrorAction SilentlyContinue; foreach \\($c in $conns\\) { $p = Get-Process -Id $c.OwningProcess; \"$\\($p.Id\\) $\\($p.ProcessName\\) $\\($p.Path\\)\" })",
+      "PowerShell($p = Get-CimInstance Win32_Process -Filter \"ProcessId = 28592\"; $p.CommandLine; Stop-Process -Id 28592 -Confirm:$false; Start-Sleep -Milliseconds 500; if \\(Get-NetTCPConnection -LocalPort 3100 -State Listen -ErrorAction SilentlyContinue\\) { \"still listening\" } else { \"port 3100 closed\" })",
+      "Bash(npx --yes pnpm@10.22.0 install --frozen-lockfile)",
+      "Bash(npx --yes pnpm@10.22.0 config get ignoredBuiltDependencies)"
+    ]
+  }
+}

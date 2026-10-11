@@ -1,0 +1,159 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* Palette shared with the auth pages. */
+@theme {
+  --color-foreground: #fafafa;
+  --color-accent-ink: #ef858a;
+  --color-success-surface: #12281c;
+  --color-success-line: #1e4a33;
+  --color-warning-surface: #241416;
+  --color-warning-line: #522226;
+  --color-danger-surface: #2a1313;
+  --color-danger-line: #4a1f1f;
+  --color-canvas: #0a0a0c;
+  --color-canvas-2: #050507;
+  --color-surface: #121215;
+  --color-surface-2: #18181c;
+  --color-line: #222228;
+  --color-line-strong: #2f3038;
+  --color-accent: #b03e43;
+  --color-accent-hover: #9c353a;
+  --color-easy: #4ade80;
+  --color-medium: #ea580c;
+  --color-hard: #b03e43;
+  --color-amber-300: #b03e43;
+}
+
+:root { color-scheme: dark; }
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --color-canvas: #f7f8fa;
+  --color-canvas-2: #eef0f4;
+  --color-surface: #ffffff;
+  --color-surface-2: #f0f2f5;
+  --color-line: #dfe3e9;
+  --color-line-strong: #c4cbd5;
+  --color-foreground: #171923;
+  --color-accent-ink: #b03e43;
+  --color-easy: #16763b;
+  --color-medium: #c2410c;
+  --color-hard: #b03e43;
+  --color-success-surface: #e8f5ed;
+  --color-success-line: #b5d9c2;
+  --color-warning-surface: #fef2f2;
+  --color-warning-line: #fecaca;
+  --color-danger-surface: #fcebed;
+  --color-danger-line: #edbcc3;
+  /* Existing neutral utilities use these shared palette values throughout the app. */
+  --color-zinc-100: #242733;
+  --color-zinc-200: #303442;
+  --color-zinc-300: #434858;
+  --color-zinc-400: #555d6e;
+  --color-zinc-500: #636b7c;
+  --color-zinc-600: #737b8a;
+  --color-zinc-700: #c4cbd5;
+  --color-zinc-800: #e3e7ed;
+  --color-red-300: #a91d2e;
+  --color-red-400: #bd2635;
+  --color-red-950: #fbe4e8;
+  --color-red-900: #d68d99;
+  --color-red-800: #c87582;
+  --color-emerald-300: #096b4c;
+  --color-emerald-400: #087652;
+  --color-violet-300: #7041b4;
+  --color-violet-400: #7949bd;
+  --color-amber-300: #b03e43;
+  --color-blue-400: #1d4ed8;
+  --color-sky-300: #075985;
+}
+
+@theme inline {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+}
+
+body {
+  background: var(--color-canvas);
+  color: var(--color-zinc-100);
+}
+
+::selection {
+  background-color: color-mix(in srgb, var(--color-accent) 25%, transparent);
+  color: var(--color-accent-ink);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-line-strong) transparent;
+}
+
+/* Problem statement: code inside fenced blocks shouldn't get the inline-code pill. */
+.problem-prose pre code {
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
+/* Debugger decorations rendered by Monaco (class names are referenced from CodeEditor). */
+.bp-glyph,
+.bp-glyph-disabled,
+.bp-glyph-conditional,
+.bp-glyph-preview {
+  cursor: pointer;
+}
+.bp-glyph::before,
+.bp-glyph-disabled::before,
+.bp-glyph-conditional::before,
+.bp-glyph-preview::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  transform: translate(-50%, -50%);
+  border-radius: 9999px;
+}
+.bp-glyph::before {
+  background: #ef4444;
+  box-shadow: 0 0 0 2px rgb(239 68 68 / 0.2);
+}
+.bp-glyph-conditional::before {
+  background: #ef4444;
+  box-shadow: inset 0 0 0 3px #ef4444, inset 0 0 0 5px var(--color-surface);
+}
+.bp-glyph-disabled::before {
+  border: 1.5px solid #71717a;
+}
+.bp-glyph-preview::before {
+  background: rgb(239 68 68 / 0.35);
+}
+.debug-current-line {
+  background: rgb(176 62 67 / 0.16);
+  box-shadow: inset 2px 0 0 #b03e43;
+}
+.debug-exception-line {
+  background: rgb(248 113 113 / 0.14);
+  box-shadow: inset 2px 0 0 #f87171;
+}
+.debug-frame-line {
+  background: rgb(74 222 128 / 0.09);
+}
+.debug-current-arrow::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-left: 7px solid #b03e43;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+}
+.debug-inline-value {
+  color: var(--color-zinc-400);
+  font-style: italic;
+  opacity: 0.85;
+}
